@@ -8,7 +8,11 @@
 
 #import "ViewController.h"
 
+#import <SceneKit/SceneKit.h>
+
 @interface ViewController ()
+@property (nonatomic,strong) SCNView *scnView;
+
 
 @end
 
@@ -16,9 +20,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    SCNScene *scene = [SCNScene scene];
+    self.scnView.scene = scene;
+    
+//    //创建节点
+    SCNNode *rootNode = [SCNNode node];
+////    添加
+    [scene.rootNode addChildNode:rootNode];
+//    //创建几何体
+    SCNCone *cone = [SCNCone coneWithTopRadius:0.2 bottomRadius:0.5 height:1];
+    cone.firstMaterial.diffuse.contents = [UIColor orangeColor];
+    rootNode.geometry = cone;
+    
+////    创建子节点
+    SCNNode *textNode = [SCNNode node];
+    textNode.position = SCNVector3Make(-0.5, 0, 1);
+////    创建有一定挤压深度的3D文本 extrusionDepth： 挤压深度
+    SCNText *text = [SCNText textWithString:@"有问题一起研究呀" extrusionDepth:0.03];
+    //设置文字颜色
+    text.firstMaterial.diffuse.contents = [UIColor blueColor];
+
+    textNode.geometry = text;
+    text.font = [UIFont systemFontOfSize:0.15];
+    [rootNode addChildNode:textNode];
+
+    [self.view addSubview:self.scnView];
+    
+    
 }
 
+
+-(SCNView*)scnView{
+    if (!_scnView) {
+        _scnView = [[SCNView alloc] initWithFrame:CGRectMake(0, 0, 375, 375)];
+        _scnView.center = self.view.center;
+        _scnView.allowsCameraControl = YES;
+        _scnView.backgroundColor = [ UIColor blackColor];
+    }
+    return _scnView;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
