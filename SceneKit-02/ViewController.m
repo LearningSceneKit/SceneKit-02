@@ -25,13 +25,13 @@
     self.scnView.scene = scene;
     
 //    //创建节点
-    SCNNode *rootNode = [SCNNode node];
+    SCNNode *coneNode = [SCNNode node];
 ////    添加
-    [scene.rootNode addChildNode:rootNode];
+    [scene.rootNode addChildNode:coneNode];
 //    //创建几何体
     SCNCone *cone = [SCNCone coneWithTopRadius:0.2 bottomRadius:0.5 height:1];
     cone.firstMaterial.diffuse.contents = [UIColor orangeColor];
-    rootNode.geometry = cone;
+    coneNode.geometry = cone;
     
 ////    创建子节点
     SCNNode *textNode = [SCNNode node];
@@ -43,7 +43,7 @@
 
     textNode.geometry = text;
     text.font = [UIFont systemFontOfSize:0.15];
-    [rootNode addChildNode:textNode];
+    [coneNode addChildNode:textNode];
 
     [self.view addSubview:self.scnView];
     
